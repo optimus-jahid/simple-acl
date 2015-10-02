@@ -5,17 +5,17 @@
     "keywords": ["simple-acl"],
     "authors": [
         {
-            "name": "Jahidul Islam",
+            "name": "Jahidul Islam"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.4.0"
     },
-     "require-dev": {
+    "require-dev": {
         "mockery/mockery": "~0.9",
         "phpunit/phpunit": "~4.0"
     },
-     "config": {
+    "config": {
         "bin-dir": "bin"
     },
     "autoload": {
@@ -24,6 +24,9 @@
     	},
     	"psr-4": {
             "SimpleAcl\\": "src/SimpleAcl/"
-        }
+        },
+        "files": [
+            "tests/TestFixture.php"
+        ]
     }
 }
