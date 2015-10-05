@@ -1,11 +1,14 @@
 <?php
 
-use SimpleAcl\SimpleAcl;
+use SimpleAcl\Repositories\PermissionRepository;
 
 class PermissionTest extends TestFixture
 {
 	public function testCanCreatePermission()
 	{
+		$repository = new PermissionRepository();
+		// $this->assertInstanceOf('PermissionRepository', $repository);
+		$this->assertObjectHasAttribute('dal1', $repository);
 		// insert into db and make sure that it's inserted
 	}
 

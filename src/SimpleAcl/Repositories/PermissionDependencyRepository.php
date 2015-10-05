@@ -2,7 +2,7 @@
 
 namespace SimpleAcl\Repositories;
 
-class RoleRepository
+class PermissionDependencyRepository
 {
     
 }

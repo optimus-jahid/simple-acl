@@ -1,0 +1,9 @@
+<?php
+
+namespace SimpleAcl\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class UserPermission extends Model {
+
+}
