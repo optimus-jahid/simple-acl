@@ -8,7 +8,7 @@ class PermissionTest extends TestFixture
 	{
 		$repository = new PermissionRepository();
 		// $this->assertInstanceOf('PermissionRepository', $repository);
-		$this->assertObjectHasAttribute('dal1', $repository);
+		// $this->assertObjectHasAttribute('dal', $repository);
 		// insert into db and make sure that it's inserted
 	}
 

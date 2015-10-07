@@ -1,12 +1,13 @@
 <?php
 
-require_once '../Config.php';
-
 namespace SimpleAcl\Models;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
+use SimpleAcl\Migrations\Table;
+
+
 
 class ModelSingleton{
 
@@ -23,7 +24,7 @@ class ModelSingleton{
 
 	protected function __construct()
 	{
-		global $config;
+		require_once realpath(__DIR__).'\..\Config.php';
 		$capsule = new Capsule;
 
 		$capsule->addConnection($config);
@@ -37,6 +38,9 @@ class ModelSingleton{
 
 		// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
 		$capsule->bootEloquent();
+
+		// create tables
+		$tables = new Table;
 	}
 
 	private function __clone()

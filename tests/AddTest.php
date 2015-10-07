@@ -1,6 +1,7 @@
 <?php
 
 use SimpleAcl\SimpleAcl;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class AddTest extends TestFixture
 {
@@ -52,6 +53,13 @@ class AddTest extends TestFixture
     	];
     	// $this->assertSame($expected, $this->users[1]);
     	$this->assertEquals($expected, $this->users[1]);
+    }
+
+    public function testHasInstance()
+    {
+        $instance = new SimpleAcl;
+        $this->assertInstanceOf('SimpleAcl\SimpleAcl', $instance);
+        
     }
 }
 

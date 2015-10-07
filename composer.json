@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/database": "*"
+        "illuminate/database": "*",
+        "illuminate/events": "^5.1"
     },
     "require-dev": {
         "mockery/mockery": "~0.9",
