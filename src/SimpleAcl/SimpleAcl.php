@@ -3,11 +3,15 @@
 namespace SimpleAcl;
 
 use SimpleAcl\Models\ModelSingleton;
+use SimpleAcl\Traits\Authorizable;
 
 class SimpleAcl
 {
-	public function __construct()
-	{
-		ModelSingleton::getInstance();
-	}
+
+	use Authorizable;
+
+	// public function __construct()
+	// {
+	// 	// ModelSingleton::getInstance(); --to create tables
+	// }
 }

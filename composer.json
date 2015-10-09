@@ -28,7 +28,8 @@
             "SimpleAcl\\": "src/SimpleAcl/"
         },
         "files": [
-            "tests/TestFixture.php"
+            "tests/TestFixture.php",
+            "src/SimpleAcl/helpers.php",
         ]
     }
 }
