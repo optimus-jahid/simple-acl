@@ -7,7 +7,7 @@ Simple ACL is an access control list in php. It's framework agnostic. You can us
 
 ## Official Documentation
 
-Documentation for Simple ACL can be found on the [Laravel website](http://boitha.com/docs/simple-acl).
+Documentation for Simple ACL can be found on the [authors website](http://jahid.me/docs/simple-acl).
 
 ## Contributing
 
