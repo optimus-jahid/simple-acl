@@ -20,11 +20,11 @@ class PermissionRepository
 
 	/**
 	 * @param RoleRepository $roles
-	 * @param PermissionDependencyRepository $dependencies
+	 * @param void
      */
-	public function __construct(RoleRepository $roles, PermissionDependencyRepository $dependencies) {
-		$this->roles = $roles;
-		$this->dependencies = $dependencies;
+	public function __construct() {
+		$this->roles = new RoleRepository;
+		$this->dependencies = new PermissionDependencyRepository;
 	}
 
 	/**
@@ -82,7 +82,7 @@ class PermissionRepository
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function create($input, $roles) {
+	public function create($input, $roles=[]) {
 		$permission = new Permission;
 		$permission->name = $input['name'];
 		$permission->display_name = $input['display_name'];
@@ -91,42 +91,6 @@ class PermissionRepository
 		$permission->sort = isset($input['sort']) ? (int)$input['sort'] : 0;
 
 		if ($permission->save()) {
-			//For each role, load role, collect perms, add perm to perms, flush perms, read perms
-			if (count($roles['permission_roles']) > 0)
-			{
-				foreach ($roles['permission_roles'] as $role_id)
-				{
-					//Get the role, with permissions
-					$role = $this->roles->findOrThrowException($role_id, true);
-
-					//Get the roles permissions into an array
-					$role_permissions = $role->permissions->lists('id')->all();
-
-					if (count($role_permissions) >= 1)
-					{
-						//Role has permissions, gather them first
-
-						//Add this new permission id to the role
-						array_push($role_permissions, $permission->id);
-
-						//For some reason the lists() casts as a string, convert all to int
-						$role_permissions_temp = array();
-						foreach ($role_permissions as $rp)
-						{
-							array_push($role_permissions_temp, (int)$rp);
-						}
-						$role_permissions = $role_permissions_temp;
-
-						//Sync the permissions to the role
-						$role->permissions()->sync($role_permissions);
-					} else
-					{
-						//Role has no permissions, add the 1
-						$role->permissions()->sync([$permission->id]);
-					}
-				}
-			}
-
 			//Add the dependencies of this permission if any
 			if (isset($input['dependencies']) && count($input['dependencies']))
 				foreach ($input['dependencies'] as $dependency_id)
@@ -135,7 +99,7 @@ class PermissionRepository
 			return true;
 		}
 
-		throw new Exception("There was a problem creating this permission. Please try again.");
+		throw new \Exception("There was a problem creating this permission. Please try again.");
 	}
 
 	/**

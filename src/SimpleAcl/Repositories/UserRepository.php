@@ -6,6 +6,7 @@ use SimpleAcl\Models\User;
 
 class UserRepository
 {
+
     /**
      * @param $id
      * @param bool $withRoles
@@ -20,7 +21,7 @@ class UserRepository
 
         if (! is_null($user)) return $user;
 
-        throw new Exception('That user does not exist.');
+        throw new \Exception('That user does not exist.');
     }
 
     /**
@@ -80,5 +81,116 @@ class UserRepository
         //Validate that there's at least one role chosen
         if (count($roles['assignees_roles']) == 0)
             throw new Exception('You must choose at least one role.');
+    }
+
+    public function attachRoles($roles, $user_id){
+        $user = $this->findOrThrowException($user_id);
+        $user->roles()->sync($roles);
+        return true;
+    }
+
+    private function checkRole($nameOrId, $user)
+    {
+        foreach ($user->roles as $role) {
+            //First check to see if it's an ID
+            if (is_numeric($nameOrId))
+                if ($role->id == $nameOrId)
+                    return true;
+
+            //Otherwise check by name
+            if ($role->name == $nameOrId)
+                return true;
+
+            return false;
+        }
+    }
+
+    public function hasRole($nameOrId, $user_id)
+    {
+        $user = $this->findOrThrowException($user_id);
+        return $this->checkRole($nameOrId, $user);
+    }
+
+    public function hasRoles($roles, $user_id, $needsAll=false)
+    {
+        //User has to possess all of the roles specified
+        if ($needsAll) {
+            $hasRoles = 0;
+            $numRoles = count($roles);
+
+            foreach ($roles as $role) {
+                if ($this->hasRole($role, $user_id))
+                    $hasRoles++;
+            }
+
+            return $numRoles == $hasRoles;
+        }
+
+        //User has to possess one of the roles specified
+        $hasRoles = 0;
+        foreach ($roles as $role) {
+            if ($this->hasRole($role, $user_id))
+                $hasRoles++;
+        }
+
+        return $hasRoles > 0;
+    }
+
+    public function checkPermission($nameOrId, $user)
+    {
+
+        foreach ($user->roles as $role) {
+            //See if role has all permissions
+            if ($role->all)
+                return true;
+
+            // Validate against the Permission table
+            foreach ($role->permissions as $perm) {
+
+                //First check to see if it's an ID
+                if (is_numeric($nameOrId))
+                    if ($perm->id == $nameOrId)
+                        return true;
+
+                //Otherwise check by name
+                if ($perm->name == $nameOrId)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasPermission($ability, $user_id)
+    {
+        $user = $this->findOrThrowException($user_id, true);
+        return $this->checkPermission($ability, $user);
+    }
+
+    public function hasPermissions($permissions, $user_id, $needsAll=false)
+    {
+        //User has to possess all of the permissions specified
+        if ($needsAll)
+        {
+            $hasPermissions = 0;
+            $numPermissions = count($permissions);
+
+            foreach ($permissions as $perm)
+            {
+                if ($this->hasPermission($perm, $user_id))
+                    $hasPermissions++;
+            }
+
+            return $numPermissions == $hasPermissions;
+        }
+
+        //User has to possess one of the permissions specified
+        $hasPermissions = 0;
+        foreach ($permissions as $perm) {
+            if ($this->hasPermission($perm, $user_id))
+                $hasPermissions++;
+        }
+
+        return $hasPermissions > 0;
     }
 }

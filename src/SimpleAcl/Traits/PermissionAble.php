@@ -1,11 +1,14 @@
 <?php
 namespace SimpleAcl\Traits;
 
+use SimpleAcl\Repositories\PermissionRepository;
+
 trait PermissionAble
 {
 	function createPermission($params)
 	{
-
+		$repository = new PermissionRepository;
+		return $repository->create($params);
 	}
 
 	function editPermission($ability)
@@ -23,8 +26,4 @@ trait PermissionAble
 
 	}
 
-	function hasPermission($ability, $user)
-	{
-		
-	}	
 }

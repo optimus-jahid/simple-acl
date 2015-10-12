@@ -10,8 +10,8 @@ class SimpleAcl
 
 	use Authorizable;
 
-	// public function __construct()
-	// {
-	// 	// ModelSingleton::getInstance(); --to create tables
-	// }
+	public function __construct()
+	{
+		ModelSingleton::getInstance(); // --to create tables
+	}
 }

@@ -53,7 +53,7 @@ class RoleRepository
 	 */
 	public function create($input) {
 		if (Role::where('name', $input['name'])->first())
-			throw new Exception('That role already exists. Please choose a different name.');
+			throw new \Exception('That role already exists. Please choose a different name.');
 
 		//See if the role has all access
 		$all = $input['associated-permissions'] == "all" ? true : false;
@@ -62,7 +62,7 @@ class RoleRepository
 		if (! $all)
 			//See if the role must contain a permission as per config
 			if (count($input['permissions']) == 0)
-				throw new Exception('You must select at least one permission for this role.');
+				throw new \Exception('You must select at least one permission for this role.');
 
 		$role = new Role;
 		$role->name = $input['name'];
@@ -73,22 +73,21 @@ class RoleRepository
 
 		if ($role->save()) {
 			if (! $all) {
-				$current = explode(",", $input['permissions']);
 				$permissions = [];
-
+				$current = explode(",", $input['permissions']);
 				if (count($current)) {
 					foreach ($current as $perm) {
 						if (is_numeric($perm))
 							array_push($permissions, $perm);
 					}
 				}
-				$role->attachPermissions($permissions);
+				$role->permissions()->attach($permissions);
 			}
 
 			return true;
 		}
 
-		throw new Exception("There was a problem creating this role. Please try again.");
+		throw new \Exception("There was a problem creating this role. Please try again.");
 	}
 
 	/**
