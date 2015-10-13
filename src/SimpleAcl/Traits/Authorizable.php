@@ -24,5 +24,11 @@ trait Authorizable
 	{
 		$repository = new UserRepository;
 		return $repository->hasPermission($ability, $user);
+	}
+
+	function hasPermissions($abilities, $user, $needsAll = false)
+	{
+		$repository = new UserRepository;
+		return $repository->hasPermissions($abilities, $user, $needsAll);
 	}	
 }

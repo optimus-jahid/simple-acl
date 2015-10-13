@@ -11,7 +11,7 @@ trait RoleAble
 		return $repository->create($params);
 	}
 
-	function editRole($role)
+	function updateRole($role_id, $params)
 	{
 
 	}

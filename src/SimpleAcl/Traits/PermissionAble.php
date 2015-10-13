@@ -11,9 +11,10 @@ trait PermissionAble
 		return $repository->create($params);
 	}
 
-	function editPermission($ability)
+	function updatePermission($perm_id, $params)
 	{
-
+		$repository = new PermissionRepository;
+		return $repository->update($perm_id, $params);	
 	}
 
 	function deletePermission($ability)

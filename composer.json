@@ -29,7 +29,7 @@
         },
         "files": [
             "tests/TestFixture.php",
-            "src/SimpleAcl/helpers.php",
+            "src/SimpleAcl/helpers.php"
         ]
     }
 }
