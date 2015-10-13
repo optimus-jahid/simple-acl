@@ -109,7 +109,7 @@ class RoleRepository
 		if (! $all)
 			//See if the role must contain a permission as per config
 			if (count($input['permissions']) == 0)
-				throw new Exception('You must select at least one permission for this role.');
+				throw new \Exception('You must select at least one permission for this role.');
 
 		$role->name = $input['name'];
 		$role->sort = isset($input['sort']) && strlen($input['sort']) > 0 && is_numeric($input['sort']) ? (int)$input['sort'] : 0;
@@ -135,13 +135,13 @@ class RoleRepository
 							array_push($permissions, $perm);
 					}
 				}
-				$role->attachPermissions($permissions);
+				$role->permissions()->attach($permissions);
 			}
 
 			return true;
 		}
 
-		throw new Exception('There was a problem updating this role. Please try again.');
+		throw new \Exception('There was a problem updating this role. Please try again.');
 	}
 
 	/**
