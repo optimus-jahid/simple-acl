@@ -1,7 +1,6 @@
 {
     "name": "optimus-jahid/simple-acl",
-	"version": "1.0.0",
-    "description": "Simple-acl is a simple access control library, which is framework agnostic",
+	"description": "Simple-acl is a simple access control library, which is framework agnostic",
     "license": "MIT",
     "keywords": ["simple-acl"],
     "authors": [
