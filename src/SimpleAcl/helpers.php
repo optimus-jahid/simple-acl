@@ -5,4 +5,10 @@ if (! function_exists('access')) {
 	{
 		return new SimpleAcl\SimpleAcl;
 	}
+
+	function setDbConfig($config)
+	{
+		SimpleAcl\SimpleAcl::initialize($config);
+	}
+
 }

@@ -13,18 +13,18 @@ class ModelSingleton{
 
 	protected static $instance;
 
-	public static function getInstance()
+	public static function getInstance($config = [])
 	{
 		if (null === static::$instance) {
-			static::$instance = new static();
+			static::$instance = new static($config);
 		}
 
 		return static::$instance;
 	}
 
-	protected function __construct()
+	protected function __construct($config = [])
 	{
-		require_once realpath(__DIR__).'\..\Config.php';
+		//require_once realpath(__DIR__).'\..\Config.php';
 		$capsule = new Capsule;
 
 		$capsule->addConnection($config);

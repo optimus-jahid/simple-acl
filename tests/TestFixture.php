@@ -1,5 +1,6 @@
 <?php
-
+use SimpleAcl\SimpleAcl;
+use Illuminate\Database\Capsule\Manager as Capsule;
 /*
  * This file is part of the Simple ACL package.
  *
@@ -19,15 +20,28 @@ class TestFixture extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        //setup factory
-        if (null === static::$factory) {
-            static::$factory = new UserFactory;
-        }
-        // $factory = new UserFactory;
-        // $this->users = $factory->getUsers();
-        $this->users = static::$factory->getUsers();
+        // //setup factory
+        // if (null === static::$factory) {
+        //     static::$factory = new UserFactory;
+        // }
+        // // $factory = new UserFactory;
+        // // $this->users = $factory->getUsers();
+        // $this->users = static::$factory->getUsers();
 
-        // create users
+        // initiate db connection
+        $db_config = [
+        'driver'    => 'mysql',
+        'host'      => 'localhost',
+        'database'  => 'simple_acl',
+        'username'  => 'root',
+        'password'  => '',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => ''
+        ];
+
+        setDbConfig($db_config);
+        
 
     }
 
